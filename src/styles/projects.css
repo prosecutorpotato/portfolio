@@ -1,0 +1,240 @@
+.projects-section {
+  padding: var(--space-2xl) 0;
+  background: var(--color-bg-elev);
+  border-top: 1px solid var(--color-border);
+}
+
+.projects-section__intro {
+  color: var(--color-text-muted);
+  max-width: 640px;
+  margin: 0 auto var(--space-lg);
+  line-height: var(--lh-normal);
+  text-align: center;
+}
+
+/* ── Marquee wrapper ──────────────────────────────────── */
+.projects-marquee-wrapper {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+  margin-bottom: var(--space-lg);
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Only the active card grows downward; neighbours stay at their collapsed height */
+.projects-marquee-wrapper .rfm-marquee,
+.projects-marquee-wrapper .rfm-initial-child-container {
+  align-items: flex-start !important;
+}
+
+.projects-marquee-wrapper .rfm-child {
+  align-self: flex-start !important;
+}
+
+/* ── Marquee card ─────────────────────────────────────── */
+.project-marquee-card {
+  width: 300px;
+  height: var(--card-collapsed-height, 170px);
+  flex-shrink: 0;
+  margin-right: var(--space-sm);
+  padding: var(--space-sm);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+
+  &:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+  }
+
+  &.pinned {
+    height: auto;
+    min-height: var(--card-collapsed-height, 240px);
+    overflow: visible;
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-lg);
+    z-index: 10;
+  }
+}
+
+.project-marquee-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+.project-marquee-card__name {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  font-family: var(--font-mono);
+  color: var(--color-text);
+  word-break: break-word;
+  line-height: var(--lh-snug);
+}
+
+/* ── Contribution role badge ─────────────────────────── */
+.project-marquee-card__role {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.role--creator {
+  background: rgba(41, 181, 232, 0.12);
+  color: var(--color-accent);
+  border: 1px solid rgba(41, 181, 232, 0.3);
+}
+
+.role--primary {
+  background: rgba(232, 116, 12, 0.10);
+  color: var(--color-orange);
+  border: 1px solid rgba(232, 116, 12, 0.3);
+}
+
+.role--contributor {
+  background: var(--color-bg-soft);
+  color: var(--color-text-subtle);
+  border: 1px solid var(--color-border);
+}
+
+.project-marquee-card__desc {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  line-height: var(--lh-snug);
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.project-marquee-card__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.project-marquee-card__langs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.project-marquee-card__lang {
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-soft);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+}
+
+.project-marquee-card__stats {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-subtle);
+}
+
+.project-marquee-card__pct {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.project-marquee-card__sep {
+  opacity: 0.5;
+}
+
+/* ── Expanded detail block inside the card ────────────── */
+.project-marquee-card__expanded {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border);
+  animation: expand-fade 0.2s ease;
+}
+
+@keyframes expand-fade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.project-marquee-card__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.project-marquee-card__stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-subtle);
+}
+
+.project-marquee-card__stat-value {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+}
+
+.project-marquee-card__fork-note {
+  color: var(--color-orange);
+}
+
+.project-marquee-card__hint {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--color-text-subtle);
+  padding-top: 0.25rem;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.projects-count {
+  text-align: center;
+  margin-top: var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--color-text-subtle);
+}
+
+@media (max-width: 640px) {
+  .project-marquee-card {
+    width: 260px;
+  }
+
+  .project-marquee-card.pinned {
+    min-height: var(--card-collapsed-height, 220px);
+  }
+}

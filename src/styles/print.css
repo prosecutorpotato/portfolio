@@ -1,0 +1,278 @@
+/* ── Print-only resume ──────────────────────────────────────
+   Hidden on screen, shown only when printing.
+   Thematically similar to the website: accent blue (#29b5e8),
+   Space Grotesk headings, Inter body, JetBrains Mono dates.
+──────────────────────────────────────────────────────────── */
+
+/* ── Screen: hide the resume component entirely ─────────── */
+.resume-print {
+  display: none;
+}
+
+/* ── Print: show only the resume, hide everything else ─── */
+@media print {
+  /* Hide all site chrome and interactive sections */
+  .snowflakes,
+  .nav,
+  .hero,
+  .timeline-section,
+  .skills-section,
+  .projects-section,
+  .experience-section,
+  .contact-section,
+  .loading-screen,
+  .error-screen {
+    display: none !important;
+  }
+
+  /* Show the resume */
+  .resume-print {
+    display: block !important;
+  }
+
+  /* ── Page setup ──────────────────────────────────────── */
+  @page {
+    size: A4;
+    margin: 1.4cm 1.5cm;
+  }
+
+  body {
+    background: white !important;
+    color: #0f172a !important;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 10pt;
+    line-height: 1.4;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Resume container ─────────────────────────────────── */
+  .resume-print {
+    max-width: 100%;
+    color: #0f172a;
+  }
+
+  /* ── Header (mirrors Hero — accent line, name, tagline) ── */
+  .resume-print__header {
+    text-align: center;
+    border-bottom: 2px solid #29b5e8;
+    padding-bottom: 8pt;
+    margin-bottom: 10pt;
+  }
+
+  .resume-print__name {
+    font-family: 'Space Grotesk', 'Helvetica Neue', sans-serif;
+    font-size: 24pt;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 1pt 0;
+    color: #0f172a;
+  }
+
+  .resume-print__title {
+    font-size: 10.5pt;
+    color: #29b5e8;
+    font-weight: 500;
+    margin: 0 0 3pt 0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .resume-print__contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2pt 12pt;
+    font-size: 8.5pt;
+    color: #475569;
+  }
+
+  .resume-print__contact-item {
+    white-space: nowrap;
+  }
+
+  /* ── Section headings (accent underline like website) ─── */
+  .resume-print__section {
+    margin-top: 10pt;
+  }
+
+  .resume-print__section--page2 {
+    break-before: page;
+    margin-top: 0;
+  }
+
+  .resume-print__section--certs {
+    margin-top: 6pt;
+  }
+
+  .resume-print__section-title {
+    font-family: 'Space Grotesk', 'Helvetica Neue', sans-serif;
+    font-size: 11pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #0f172a;
+    border-bottom: 1px solid #29b5e8;
+    padding-bottom: 1.5pt;
+    margin-bottom: 5pt;
+  }
+
+  /* ── Summary ────────────────────────────────────────── */
+  .resume-print__summary {
+    font-size: 9.5pt;
+    color: #334155;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  /* ── Experience ─────────────────────────────────────── */
+  .resume-print__role {
+    margin-bottom: 7pt;
+    break-inside: avoid;
+  }
+
+  .resume-print__role-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0;
+  }
+
+  .resume-print__role-title {
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  .resume-print__role-dates {
+    font-size: 8.5pt;
+    color: #64748b;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    white-space: nowrap;
+  }
+
+  .resume-print__role-company {
+    font-size: 9.5pt;
+    color: #29b5e8;
+    font-weight: 500;
+    margin-bottom: 1pt;
+  }
+
+  .resume-print__role-desc {
+    font-size: 9pt;
+    color: #334155;
+    line-height: 1.35;
+    margin: 0 0 2pt 0;
+  }
+
+  .resume-print__achievements {
+    margin: 0;
+    padding-left: 12pt;
+    font-size: 9pt;
+    color: #334155;
+    line-height: 1.3;
+  }
+
+  .resume-print__achievements li {
+    margin-bottom: 0.5pt;
+  }
+
+  /* ── Skills & Tools ─────────────────────────────────── */
+  .resume-print__skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4pt 16pt;
+  }
+
+  .resume-print__skill-group {
+    min-width: 130pt;
+  }
+
+  .resume-print__skill-cat {
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: #29b5e8;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0;
+  }
+
+  .resume-print__skill-items {
+    font-size: 9pt;
+    color: #334155;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  /* ── Projects (condensed — single line per project) ─── */
+  .resume-print__project {
+    font-size: 9pt;
+    color: #334155;
+    line-height: 1.3;
+    margin-bottom: 2pt;
+    break-inside: avoid;
+  }
+
+  .resume-print__project-name {
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  .resume-print__project-sep {
+    color: #94a3b8;
+  }
+
+  .resume-print__project-desc-inline {
+    color: #475569;
+  }
+
+  /* ── Education ─────────────────────────────────────── */
+  .resume-print__edu {
+    margin-bottom: 3pt;
+  }
+
+  .resume-print__edu-qualification {
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  .resume-print__edu-institution {
+    font-size: 9pt;
+    color: #29b5e8;
+    margin: 0;
+  }
+
+  .resume-print__edu-dates {
+    font-size: 8.5pt;
+    color: #64748b;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  /* ── Certifications (grouped by issuer) ─────────────── */
+  .resume-print__cert-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 2pt;
+  }
+
+  .resume-print__cert-group {
+    font-size: 8.5pt;
+    color: #475569;
+    line-height: 1.35;
+    break-inside: avoid;
+  }
+
+  .resume-print__cert-issuer-label {
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  .resume-print__cert-sep {
+    color: #94a3b8;
+  }
+
+  .resume-print__cert-titles {
+    color: #334155;
+  }
+}
