@@ -1,0 +1,80 @@
+.page {
+  width: min(960px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 3rem 0 4rem;
+}
+
+.hero {
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.lead {
+  max-width: 70ch;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: color-mix(in oklab, var(--bg) 92%, var(--accent) 8%);
+}
+
+.timeline ul,
+.skills {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.timeline li + li {
+  margin-top: 1rem;
+}
+
+.period {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.role {
+  margin-bottom: 0.2rem;
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.skills li + li {
+  margin-top: 0.75rem;
+}
+
+.skills li > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.2rem;
+}
+
+.bar {
+  border-radius: 999px;
+  height: 0.6rem;
+  background: var(--social-bg);
+  overflow: hidden;
+}
+
+.bar > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
