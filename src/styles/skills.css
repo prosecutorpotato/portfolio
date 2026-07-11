@@ -1,0 +1,117 @@
+.skills-section {
+  padding: var(--space-2xl) 0;
+  background: var(--color-bg-soft);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.skills-section__intro {
+  color: var(--color-text-muted);
+  max-width: 640px;
+  margin: 0 auto var(--space-lg);
+  line-height: var(--lh-normal);
+  text-align: center;
+}
+
+/* ── Side-by-side graph + role distribution ──────────── */
+.skills-graphs-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+  margin-bottom: var(--space-sm);
+}
+
+.skills-chart-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.skills-chart {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: 480px;
+}
+
+/* ── Force-directed graph nodes ───────────────────────── */
+.skill-node circle {
+  transition: fill-opacity 0.15s ease;
+}
+
+.skill-node--hub {
+  filter: drop-shadow(0 2px 6px rgba(15, 23, 42, 0.08));
+}
+
+/* ── Role distribution bars ──────────────────────────────── */
+.skills-roles {
+  padding-top: 6rem;
+}
+
+.skills-roles__label {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  margin-bottom: var(--space-md);
+}
+
+.skills-roles__bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.skills-role {
+  display: grid;
+  grid-template-columns: 180px 1fr 50px;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.skills-role__name {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+  text-align: right;
+}
+
+.skills-role__track {
+  height: 8px;
+  background: transparent;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.skills-role__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-blue));
+  border-radius: var(--radius-full);
+  transition: width 0.8s ease;
+}
+
+.skills-role__count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--color-text-subtle);
+  text-align: left;
+}
+
+@media (max-width: 900px) {
+  .skills-graphs-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .skills-role {
+    grid-template-columns: 130px 1fr 40px;
+  }
+  .skills-role__name {
+    font-size: var(--fs-mono);
+  }
+}

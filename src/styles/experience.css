@@ -1,0 +1,317 @@
+.experience-section {
+  padding: var(--space-2xl) 0;
+}
+
+.experience-roles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.experience-card {
+  background: var(--color-bg-elev);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow),
+    border-color var(--transition-base), box-shadow var(--transition-base);
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.experience-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.experience-card__title {
+  font-size: var(--fs-h3);
+  margin-bottom: 0.25rem;
+}
+
+.experience-card__company {
+  color: var(--color-accent);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-body);
+}
+
+.experience-card__separator {
+  color: var(--color-text-subtle);
+}
+
+.experience-card__location {
+  color: var(--color-text-muted);
+  font-weight: var(--fw-regular);
+}
+
+.experience-card__dates {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  padding: 0.25rem 0.75rem;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+}
+
+.experience-card__desc {
+  color: var(--color-text-muted);
+  line-height: var(--lh-normal);
+  margin-bottom: var(--space-sm);
+}
+
+.experience-card__achievements {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.experience-card__achievement {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  color: var(--color-text);
+  line-height: var(--lh-normal);
+  font-size: var(--fs-body);
+}
+
+.experience-card__achievement-dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  margin-top: 0.55em;
+}
+
+.experience-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  background: rgba(232, 116, 12, 0.10);
+  border: 1px solid var(--color-orange);
+  border-radius: var(--radius-full);
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  color: var(--color-orange);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.experience-card__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-orange);
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ── Streaming cursor ─────────────────────────────────── */
+.stream-cursor {
+  display: inline-block;
+  color: var(--color-accent);
+  font-weight: 100;
+  margin-left: 1px;
+  animation: stream-blink 0.8s step-end infinite;
+}
+
+@keyframes stream-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ── Education & Awards grid ──────────────────────────── */
+.experience-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.experience-subtitle {
+  font-size: var(--fs-h2);
+  margin-bottom: var(--space-md);
+}
+
+/* Education */
+.experience-edu-card {
+  background: var(--color-bg-elev);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.experience-edu-qualification {
+  font-size: var(--fs-h3);
+  margin-bottom: 0.25rem;
+}
+
+.experience-edu-institution {
+  color: var(--color-accent);
+  font-weight: var(--fw-medium);
+  margin-bottom: 0.25rem;
+}
+
+.experience-edu-date {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.experience-edu-desc {
+  color: var(--color-text-muted);
+  line-height: var(--lh-normal);
+}
+
+/* Awards */
+.experience-awards-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.experience-award-card {
+  display: flex;
+  gap: var(--space-sm);
+  background: var(--color-bg-elev);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  transition: border-color var(--transition-base);
+
+  &:hover {
+    border-color: var(--color-border-hover);
+  }
+}
+
+.experience-award-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--color-accent);
+  background: var(--color-accent-glow);
+  border-radius: var(--radius-md);
+}
+
+.experience-award-title {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  margin-bottom: 0.1rem;
+}
+
+.experience-award-issuer {
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+}
+
+.experience-award-date {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--color-text-subtle);
+  margin: 0.1rem 0 0.25rem;
+}
+
+.experience-award-desc {
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+  line-height: var(--lh-snug);
+}
+
+@media (max-width: 768px) {
+  .experience-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Collapsible sections ────────────────────────────── */
+.experience-collapsible {
+  margin-top: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.experience-collapsible__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-elev);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+
+  &:hover {
+    background: var(--color-bg-soft);
+  }
+}
+
+.experience-collapsible__title {
+  flex: 1;
+  text-align: left;
+}
+
+.experience-collapsible__chevron {
+  font-size: 0.9rem;
+  color: var(--color-text-subtle);
+  transition: transform var(--transition-base);
+  transform: rotate(0deg);
+
+  &.open {
+    transform: rotate(90deg);
+  }
+}
+
+.experience-collapsible__content {
+  padding: var(--space-sm) var(--space-md);
+  animation: fade-in 0.2s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.experience-collapsible__content .experience-edu-card {
+  margin-bottom: var(--space-sm);
+}
+
+.experience-collapsible__content .experience-awards-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
