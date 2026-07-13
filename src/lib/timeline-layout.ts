@@ -77,11 +77,12 @@ export function computeTimelineLayout(
   }));
 
   // ── X scale — time-based, extend to current date ───────
-  const xExtent = d3.extent(parsed, (d) => d.parsedDate) as [Date, Date];
+  const xExtent = d3.extent(parsed, (d) => d.parsedDate) as [Date | undefined, Date | undefined];
   const now = new Date();
-  const xMax = new Date(Math.max(xExtent[1].getTime(), now.getTime()));
-  const padding = (xMax.getTime() - xExtent[0].getTime()) * 0.05;
-  const xMin = new Date(xExtent[0].getTime() - padding);
+  const xMinDate = xExtent[0] ?? now;
+  const xMax = new Date(Math.max(xExtent[1]?.getTime() ?? now.getTime(), now.getTime()));
+  const padding = (xMax.getTime() - xMinDate.getTime()) * 0.05;
+  const xMin = new Date(xMinDate.getTime() - padding);
   const xMaxPadded = new Date(xMax.getTime() + padding);
   const xScale = d3.scaleTime().domain([xMin, xMaxPadded]).range([0, width]);
 
@@ -101,8 +102,8 @@ export function computeTimelineLayout(
 
   // ── Role spans ─────────────────────────────────────────
   const roleSpans: PositionedRoleSpan[] = roles.map((role, idx) => {
-    const start = parseDate(role.start_date)!;
-    const end = role.end_date ? parseDate(role.end_date)! : new Date();
+    const start = parseDate(role.startDate)!;
+    const end = role.endDate ? parseDate(role.endDate)! : new Date();
     return {
       role,
       x0: xScale(start),

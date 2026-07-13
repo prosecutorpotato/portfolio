@@ -1,18 +1,18 @@
 {
-  "name": "profile-webpage",
+  "name": "portfolio-frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run db:build && tsc -b && vite build",
+    "build": "tsc -b && vite build",
     "build:ci": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "oxlint",
-    "db:build": "node scripts/build-db.mjs",
-    "db:seed": "npx tsx prisma/seed.ts",
-    "db:studio": "npx prisma studio",
-    "db:push": "npx prisma db push --force-reset && npx tsx prisma/seed.ts"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:unit": "vitest run src/lib src/data/db.test.ts",
+    "test:integration": "vitest run src/data/db-integration.test.ts"
   },
   "dependencies": {
     "d3": "^7.9.0",
@@ -22,26 +22,19 @@
     "sql.js": "^1.14.1"
   },
   "devDependencies": {
-    "@prisma/client": "^6.19.3",
     "@types/d3": "^7.4.3",
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/sql.js": "^1.4.11",
     "@vitejs/plugin-react": "^6.0.3",
+    "jsdom": "^29.1.1",
     "oxlint": "^1.71.0",
-    "prisma": "^6.19.3",
-    "tsx": "^4.23.0",
     "typescript": "~6.0.2",
-    "vite": "^8.1.1"
+    "vite": "^8.1.1",
+    "vitest": "^4.1.10"
   },
   "allowScripts": {
-    "esbuild@0.28.1": true,
-    "prisma@6.19.3": true,
-    "@prisma/engines@6.19.3": true,
-    "@prisma/client@6.19.3": true
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "esbuild@0.28.1": true
   }
 }

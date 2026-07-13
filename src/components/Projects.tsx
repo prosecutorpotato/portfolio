@@ -24,18 +24,18 @@ function parseLanguages(langStr: string): string[] {
 }
 
 function contributionPct(project: Project): number {
-  return project.total_commits > 0
-    ? Math.round((project.my_commits / project.total_commits) * 100)
+  return project.totalCommits > 0
+    ? Math.round((project.myCommits / project.totalCommits) * 100)
     : 100;
 }
 
 export function Projects({ projects }: ProjectsProps) {
   const [ref, visible] = useScrollReveal<HTMLDivElement>();
-  const [pinnedId, setPinnedId] = useState<number | null>(null);
+  const [pinnedId, setPinnedId] = useState<string | null>(null);
   const [marqueeReady, setMarqueeReady] = useState(false);
 
   const sorted = useMemo(
-    () => [...projects].sort((a, b) => b.last_commit_date.localeCompare(a.last_commit_date)),
+    () => [...projects].sort((a, b) => b.lastCommitDate.localeCompare(a.lastCommitDate)),
     [projects],
   );
 
@@ -86,7 +86,7 @@ export function Projects({ projects }: ProjectsProps) {
           {sorted.map((project) => {
             const isPinned = pinnedId === project.id;
             const langs = parseLanguages(project.languages);
-            const role = ROLE_BADGE[project.contribution_role] || ROLE_BADGE.contributor;
+            const role = ROLE_BADGE[project.contributionRole as ContributionRole] || ROLE_BADGE.contributor;
             const pct = contributionPct(project);
 
             return (
@@ -119,9 +119,9 @@ export function Projects({ projects }: ProjectsProps) {
                   <div className="project-marquee-card__stats">
                     <span className="project-marquee-card__pct">{pct}%</span>
                     <span className="project-marquee-card__sep">·</span>
-                    <span className="project-marquee-card__commits">{project.my_commits} commits</span>
+                    <span className="project-marquee-card__commits">{project.myCommits} commits</span>
                     <span className="project-marquee-card__sep">·</span>
-                    <span className="project-marquee-card__date">{relativeTime(project.last_commit_date)}</span>
+                    <span className="project-marquee-card__date">{relativeTime(project.lastCommitDate)}</span>
                   </div>
                 </div>
 
@@ -129,25 +129,25 @@ export function Projects({ projects }: ProjectsProps) {
                   <div className="project-marquee-card__expanded">
                     <div className="project-marquee-card__stat">
                       <span className="project-marquee-card__stat-label">My Commits</span>
-                      <span className="project-marquee-card__stat-value">{project.my_commits}</span>
+                      <span className="project-marquee-card__stat-value">{project.myCommits}</span>
                     </div>
                     <div className="project-marquee-card__stat">
                       <span className="project-marquee-card__stat-label">Total Commits</span>
-                      <span className="project-marquee-card__stat-value">{project.total_commits}</span>
+                      <span className="project-marquee-card__stat-value">{project.totalCommits}</span>
                     </div>
                     <div className="project-marquee-card__stat">
                       <span className="project-marquee-card__stat-label">First Commit</span>
-                      <span className="project-marquee-card__stat-value">{formatDate(project.first_commit_date)}</span>
+                      <span className="project-marquee-card__stat-value">{formatDate(project.firstCommitDate)}</span>
                     </div>
                     <div className="project-marquee-card__stat">
                       <span className="project-marquee-card__stat-label">Last Active</span>
-                      <span className="project-marquee-card__stat-value">{formatDate(project.last_commit_date)}</span>
+                      <span className="project-marquee-card__stat-value">{formatDate(project.lastCommitDate)}</span>
                     </div>
                     <div className="project-marquee-card__stat">
                       <span className="project-marquee-card__stat-label">Organisation</span>
                       <span className="project-marquee-card__stat-value">{project.organisation}</span>
                     </div>
-                    {project.is_fork && (
+                    {project.isFork && (
                       <div className="project-marquee-card__stat">
                         <span className="project-marquee-card__stat-label">Note</span>
                         <span className="project-marquee-card__stat-value project-marquee-card__fork-note">Forked repository</span>

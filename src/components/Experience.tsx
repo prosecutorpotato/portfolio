@@ -75,7 +75,7 @@ export function Experience({ roles, education, awards }: ExperienceProps) {
                   <h4 className="experience-edu-qualification">{edu.qualification}</h4>
                   <p className="experience-edu-institution">{edu.institution}</p>
                   <p className="experience-edu-date">
-                    {formatDateRange(edu.start_date, edu.end_date)}
+                    {formatDateRange(edu.startDate, edu.endDate)}
                   </p>
                   <p className="experience-edu-desc">{edu.description}</p>
                 </div>
@@ -148,7 +148,7 @@ function ExperienceCard({ role, index }: { role: Role; index: number }) {
         <div>
           <h3 className="experience-card__title">
             {role.title}
-            {role.is_current && (
+            {role.isCurrent && (
               <span className="experience-card__badge">
                 <span className="experience-card__badge-dot" /> Current role
               </span>
@@ -159,7 +159,7 @@ function ExperienceCard({ role, index }: { role: Role; index: number }) {
             <span className="experience-card__location">{role.location}</span>
           </p>
         </div>
-        <span className="experience-card__dates">{formatDateRange(role.start_date, role.end_date)}</span>
+        <span className="experience-card__dates">{formatDateRange(role.startDate, role.endDate)}</span>
       </div>
 
       <p className="experience-card__desc">
@@ -167,7 +167,7 @@ function ExperienceCard({ role, index }: { role: Role; index: number }) {
       </p>
 
       <ul className="experience-card__achievements">
-        {role.achievements.map((achievement, i) => (
+        {role.achievements.map((achievement: string, i: number) => (
           <li key={i} className="experience-card__achievement">
             <span className="experience-card__achievement-dot" />
             <StreamText text={achievement} start={streamIndex >= i + 2} />
