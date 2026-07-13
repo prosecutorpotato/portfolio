@@ -15,7 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  # ── Test gate: run unit + integration tests before deploying ──
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +25,23 @@ jobs:
         with:
           node-version: 22
 
-      - run: npm install
+      - run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+  # ── Build + deploy: only runs if tests pass ──
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm ci
 
       - run: npm run build:ci
 

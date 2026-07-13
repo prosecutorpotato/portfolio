@@ -20,7 +20,7 @@ let db: Database | null = null;
 let SQL: SqlJsStatic | null = null;
 
 // Versioned key — bump when schema changes to invalidate stale localStorage caches
-const DB_STORAGE_KEY = 'kenji-profile-db-v5';
+const DB_STORAGE_KEY = 'kenji-profile-db-v6';
 
 // Prior versions to clear on retry so stale caches don't survive a schema bump.
 const STALE_STORAGE_KEYS = [
@@ -245,15 +245,17 @@ function getAllRoles(): Role[] {
   log.debug('QUERY', 'getAllRoles()');
   const rows = queryAll('SELECT * FROM roles ORDER BY start_date DESC');
   const result = rows.map((r): Role => ({
-    id: num(r, 'id'),
+    id: str(r, 'id'),
     company: str(r, 'company'),
     title: str(r, 'title'),
-    start_date: str(r, 'start_date'),
-    end_date: nullableStr(r, 'end_date'),
+    startDate: str(r, 'start_date'),
+    endDate: nullableStr(r, 'end_date'),
     location: str(r, 'location'),
     description: str(r, 'description'),
-    is_current: bool(r, 'is_current'),
+    isCurrent: bool(r, 'is_current'),
     achievements: JSON.parse(str(r, 'achievements')) as string[],
+    createdAt: str(r, 'created_at'),
+    updatedAt: str(r, 'updated_at'),
   }));
   log.info('QUERY', `getAllRoles: ${result.length} roles`);
   return result;
@@ -263,13 +265,15 @@ function getAllEvents(): TimelineEvent[] {
   log.debug('QUERY', 'getAllEvents()');
   const rows = queryAll('SELECT * FROM timeline_events ORDER BY date ASC');
   const result = rows.map((r): TimelineEvent => ({
-    id: num(r, 'id'),
-    role_id: (r.role_id ?? null) as number | null,
-    event_type: str(r, 'event_type') as TimelineEvent['event_type'],
+    id: str(r, 'id'),
+    roleId: (r.role_id ?? null) as string | null,
+    eventType: str(r, 'event_type') as TimelineEvent['eventType'],
     date: str(r, 'date'),
     title: str(r, 'title'),
     description: str(r, 'description'),
-    company: r.company as string | undefined,
+    company: (r.company ?? null) as string | null,
+    createdAt: str(r, 'created_at'),
+    updatedAt: str(r, 'updated_at'),
   }));
   log.info('QUERY', `getAllEvents: ${result.length} events`);
   return result;
@@ -279,10 +283,12 @@ function getAllTools(): Tool[] {
   log.debug('QUERY', 'getAllTools()');
   const rows = queryAll('SELECT * FROM tools ORDER BY proficiency DESC, name ASC');
   const result = rows.map((r): Tool => ({
-    id: num(r, 'id'),
+    id: str(r, 'id'),
     name: str(r, 'name'),
     category: str(r, 'category'),
     proficiency: num(r, 'proficiency'),
+    createdAt: str(r, 'created_at'),
+    updatedAt: str(r, 'updated_at'),
   }));
   log.info('QUERY', `getAllTools: ${result.length} tools`);
   return result;
@@ -292,10 +298,12 @@ function getAllSkills(): Skill[] {
   log.debug('QUERY', 'getAllSkills()');
   const rows = queryAll('SELECT * FROM skills ORDER BY proficiency DESC, name ASC');
   const result = rows.map((r): Skill => ({
-    id: num(r, 'id'),
+    id: str(r, 'id'),
     name: str(r, 'name'),
     category: str(r, 'category'),
     proficiency: num(r, 'proficiency'),
+    createdAt: str(r, 'created_at'),
+    updatedAt: str(r, 'updated_at'),
   }));
   log.info('QUERY', `getAllSkills: ${result.length} skills`);
   return result;
@@ -305,12 +313,14 @@ function getAllEducation(): Education[] {
   log.debug('QUERY', 'getAllEducation()');
   const rows = queryAll('SELECT * FROM education ORDER BY start_date DESC');
   const result = rows.map((r): Education => ({
-    id: num(r, 'id'),
+    id: str(r, 'id'),
     institution: str(r, 'institution'),
     qualification: str(r, 'qualification'),
-    start_date: str(r, 'start_date'),
-    end_date: str(r, 'end_date'),
+    startDate: str(r, 'start_date'),
+    endDate: str(r, 'end_date'),
     description: str(r, 'description'),
+    createdAt: str(r, 'created_at'),
+    updatedAt: str(r, 'updated_at'),
   }));
   log.info('QUERY', `getAllEducation: ${result.length} entries`);
   return result;
@@ -320,11 +330,13 @@ function getAllAwards(): Award[] {
   log.debug('QUERY', 'getAllAwards()');
   const rows = queryAll('SELECT * FROM awards ORDER BY date DESC');
   const result = rows.map((r): Award => ({
-    id: num(r, 'id'),
+    id: str(r, 'id'),
     title: str(r, 'title'),
     issuer: str(r, 'issuer'),
     date: str(r, 'date'),
     description: str(r, 'description'),
+    createdAt: str(r, 'created_at'),
+    updatedAt: str(r, 'updated_at'),
   }));
   log.info('QUERY', `getAllAwards: ${result.length} awards`);
   return result;
@@ -334,18 +346,20 @@ function getAllProjects(): Project[] {
   log.debug('QUERY', 'getAllProjects()');
   const rows = queryAll('SELECT * FROM projects ORDER BY last_commit_date DESC');
   const result = rows.map((r): Project => ({
-    id: num(r, 'id'),
+    id: str(r, 'id'),
     name: str(r, 'name'),
     description: str(r, 'description'),
     organisation: str(r, 'organisation'),
     languages: str(r, 'languages'),
     category: str(r, 'category'),
-    contribution_role: str(r, 'contribution_role') as ContributionRole,
-    last_commit_date: str(r, 'last_commit_date'),
-    first_commit_date: str(r, 'first_commit_date'),
-    my_commits: num(r, 'my_commits'),
-    total_commits: num(r, 'total_commits'),
-    is_fork: bool(r, 'is_fork'),
+    contributionRole: str(r, 'contribution_role') as ContributionRole,
+    lastCommitDate: str(r, 'last_commit_date'),
+    firstCommitDate: str(r, 'first_commit_date'),
+    myCommits: num(r, 'my_commits'),
+    totalCommits: num(r, 'total_commits'),
+    isFork: bool(r, 'is_fork'),
+    createdAt: str(r, 'created_at'),
+    updatedAt: str(r, 'updated_at'),
   }));
   log.info('QUERY', `getAllProjects: ${result.length} projects`);
   return result;
@@ -357,7 +371,7 @@ function getGraphNodes(): GraphNodeData[] {
   log.debug('QUERY', 'getGraphNodes()');
   const rows = queryAll('SELECT * FROM graph_nodes ORDER BY type, commit_count DESC');
   const result = rows.map((r): GraphNodeData => ({
-    id: num(r, 'id'),
+    id: str(r, 'id'),
     nodeId: str(r, 'node_id'),
     name: str(r, 'name'),
     group: str(r, 'group'),
@@ -365,6 +379,7 @@ function getGraphNodes(): GraphNodeData[] {
     weight: num(r, 'weight'),
     commitCount: num(r, 'commit_count'),
     color: (r.color ?? null) as string | null,
+    createdAt: str(r, 'created_at'),
   }));
   log.info('QUERY', `getGraphNodes: ${result.length} nodes`);
   return result;
@@ -374,7 +389,7 @@ function getGraphLinks(): GraphLinkData[] {
   log.debug('QUERY', 'getGraphLinks()');
   const rows = queryAll('SELECT * FROM graph_links');
   const result = rows.map((r): GraphLinkData => ({
-    id: num(r, 'id'),
+    id: str(r, 'id'),
     source: str(r, 'source'),
     target: str(r, 'target'),
     strength: num(r, 'strength'),

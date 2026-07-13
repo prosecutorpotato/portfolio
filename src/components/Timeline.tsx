@@ -168,7 +168,7 @@ export function Timeline({ events, roles }: TimelineProps) {
       .append('circle')
       .attr('class', 'timeline-dot')
       .attr('r', 0)
-      .attr('fill', (d) => EVENT_COLORS[d.event.event_type] || 'var(--color-accent)')
+      .attr('fill', (d) => EVENT_COLORS[d.event.eventType as EventType] || 'var(--color-accent)')
       .attr('stroke', 'var(--color-bg-card)')
       .attr('stroke-width', 3)
       .transition()
@@ -197,7 +197,7 @@ export function Timeline({ events, roles }: TimelineProps) {
         .attr('class', 'timeline-pulse')
         .attr('r', 10)
         .attr('fill', 'none')
-        .attr('stroke', EVENT_COLORS[layout.lastEvent.event.event_type])
+        .attr('stroke', EVENT_COLORS[layout.lastEvent.event.eventType as EventType])
         .attr('stroke-width', 2)
         .attr('opacity', 0.6)
         .style('animation', 'timeline-pulse 2s ease-out infinite');
@@ -213,7 +213,7 @@ export function Timeline({ events, roles }: TimelineProps) {
       .attr('font-size', '10px')
       .attr('fill', 'var(--color-bg-card)')
       .attr('font-weight', 'bold')
-      .text((d) => EVENT_ICONS[d.event.event_type] || '●')
+      .text((d) => EVENT_ICONS[d.event.eventType as EventType] || '●')
       .style('pointer-events', 'none')
       .style('opacity', 0)
       .transition()
@@ -266,8 +266,8 @@ export function Timeline({ events, roles }: TimelineProps) {
       // Update role spans
       roleSpans.forEach((rs, i) => {
         const parseDate = d3.timeParse('%Y-%m-%d');
-        rs.x0 = xScale(parseDate(roles[i].start_date)!);
-        rs.x1 = xScale(roles[i].end_date ? parseDate(roles[i].end_date)! : new Date());
+        rs.x0 = xScale(parseDate(roles[i].startDate)!);
+        rs.x1 = xScale(roles[i].endDate ? parseDate(roles[i].endDate)! : new Date());
       });
       g.selectAll('.timeline-role-span')
         .attr('x', (_, i) => roleSpans[i].x0)
@@ -330,9 +330,9 @@ export function Timeline({ events, roles }: TimelineProps) {
               <div key={ev.id} className="timeline-card__item">
                 <span
                   className="timeline-card__type"
-                  style={{ color: EVENT_COLORS[ev.event_type] }}
+                  style={{ color: EVENT_COLORS[ev.eventType as EventType] }}
                 >
-                  {ev.event_type}
+                  {ev.eventType}
                 </span>
                 <h3 className="timeline-card__title">{ev.title}</h3>
                 {ev.company && <p className="timeline-card__company">{ev.company}</p>}

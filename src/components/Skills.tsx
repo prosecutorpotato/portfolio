@@ -130,7 +130,7 @@ export function Skills({ graph }: SkillsProps) {
       id: d.nodeId,
       name: d.name,
       group: d.group,
-      type: d.type,
+      type: d.type as 'hub' | 'tool' | 'feature',
       radius: d.type === 'hub'
         ? Math.max(radiusScale(d.commitCount), 18)
         : radiusScale(d.commitCount),
@@ -143,7 +143,7 @@ export function Skills({ graph }: SkillsProps) {
       source: d.source,
       target: d.target,
       strength: d.strength,
-      kind: d.kind,
+      kind: d.kind as 'membership' | 'related' | 'cooccurrence',
       cooccurrence: d.cooccurrence,
     }));
 

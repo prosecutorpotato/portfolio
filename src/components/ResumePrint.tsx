@@ -67,8 +67,8 @@ export function ResumePrint({ data }: ResumePrintProps) {
 
   // Top 8 projects, Creator + Primary Contributor, most recent first
   const topProjects = projects
-    .filter((p) => p.contribution_role === 'creator' || p.contribution_role === 'primary')
-    .sort((a, b) => b.last_commit_date.localeCompare(a.last_commit_date))
+    .filter((p) => p.contributionRole === 'creator' || p.contributionRole === 'primary')
+    .sort((a, b) => b.lastCommitDate.localeCompare(a.lastCommitDate))
     .slice(0, 8);
 
   // Group certifications by issuer
@@ -121,7 +121,7 @@ export function ResumePrint({ data }: ResumePrintProps) {
             <div className="resume-print__role-header">
               <span className="resume-print__role-title">{role.title}</span>
               <span className="resume-print__role-dates">
-                {formatDateRange(role.start_date, role.end_date)}
+                {formatDateRange(role.startDate, role.endDate)}
               </span>
             </div>
             <p className="resume-print__role-company">
@@ -130,7 +130,7 @@ export function ResumePrint({ data }: ResumePrintProps) {
             <p className="resume-print__role-desc">{role.description}</p>
             {role.achievements.length > 0 && (
               <ul className="resume-print__achievements">
-                {role.achievements.map((a, i) => (
+                {role.achievements.map((a: string, i: number) => (
                   <li key={i}>{a}</li>
                 ))}
               </ul>
@@ -176,7 +176,7 @@ export function ResumePrint({ data }: ResumePrintProps) {
             <div className="resume-print__role-header">
               <span className="resume-print__edu-qualification">{edu.qualification}</span>
               <span className="resume-print__edu-dates">
-                {formatDateRange(edu.start_date, edu.end_date)}
+                {formatDateRange(edu.startDate, edu.endDate)}
               </span>
             </div>
             <p className="resume-print__edu-institution">{edu.institution}</p>
