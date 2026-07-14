@@ -12,8 +12,8 @@ This is a static personal portfolio site hosted on GitHub Pages. No server, no b
 
 ## What's not in the repo
 
-- Build-time scripts (`prisma/seed.ts`, `prisma/analyze-commits.ts`, `scripts/`) — gitignored, kept locally only
-- Internal architecture documentation (`docs/adr/`, `CONTEXT.md`) — gitignored
+- Build-time scripts (`prisma/`, `scripts/`, commit analysis, LLM pipeline) — these live in the separate [portfolio-backend](https://github.com/prosecutorpotato/portfolio-backend) repo, not this one
+- Internal architecture documentation (`docs/`) — kept in the backend repo
 - Raw commit data — purged from the deployed database at build time (only derived graph topology remains)
 - Internal repository names, internal system names, Jira ticket references — not in the repo or the deployed database
 - Environment files, secrets, API keys — gitignored; none are needed for the site
